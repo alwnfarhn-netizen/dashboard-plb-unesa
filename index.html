@@ -1,1 +1,368 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>S1 Pendidikan Luar Biasa UNESA</title>
+<link href="https://fonts.googleapis.com/css2?family=Lora:wght@400;500;600&family=Source+Sans+3:wght@400;500;600&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:'Source Sans 3','Segoe UI',sans-serif;background:#f5f4f0;color:#1a1a1a;}
+.plb-page{max-width:960px;margin:0 auto;padding:40px 20px;}
 
+/* ===== HERO ===== */
+.hero{background:#3D1165;border-radius:20px 20px 0 0;padding:56px 48px 48px;text-align:center;position:relative;overflow:hidden;}
+.hero::before{content:'';position:absolute;top:-60px;right:-60px;width:240px;height:240px;border-radius:50%;background:rgba(255,255,255,0.04);pointer-events:none;}
+.hero-ey{display:inline-block;background:rgba(255,255,255,0.12);color:#D4C6F0;font-size:12px;font-weight:500;letter-spacing:.12em;text-transform:uppercase;padding:6px 16px;border-radius:99px;border:1px solid rgba(255,255,255,0.18);margin-bottom:24px;}
+.hero-title{font-family:'Lora',Georgia,serif;font-size:36px;font-weight:600;color:#fff;line-height:1.35;margin:0 auto 18px;max-width:640px;}
+.hero-desc{font-size:15px;color:#C9BAE8;line-height:1.75;margin:0 auto 32px;max-width:520px;}
+.hero-pills{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;margin-bottom:36px;}
+.hero-pill{background:rgba(255,255,255,0.10);color:#E2D8F5;font-size:13px;font-weight:500;padding:6px 15px;border-radius:99px;border:1px solid rgba(255,255,255,0.16);}
+.hero-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;}
+.hero-stat{background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.13);border-radius:12px;padding:18px 14px;}
+.hero-stat-num{font-family:'Lora',Georgia,serif;font-size:26px;font-weight:600;color:#fff;margin-bottom:4px;}
+.hero-stat-lbl{font-size:12px;color:#B8A8DA;line-height:1.4;}
+
+/* ===== GRADASI ===== */
+.grad{background:linear-gradient(180deg,#3D1165 0%,#5A1F82 40%,#7B3AA0 70%,#C4A0DC 88%,#EAE0F0 96%,#fff 100%);padding:32px 48px 56px;}
+.vm-ey{display:inline-block;background:rgba(255,255,255,0.18);color:#EDE0FF;font-size:11px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;padding:5px 14px;border-radius:99px;border:1px solid rgba(255,255,255,0.25);margin-bottom:18px;}
+.vm-title{font-family:'Lora',Georgia,serif;font-size:24px;font-weight:600;color:#fff;margin:0 0 5px;}
+.vm-sub{font-size:13px;color:#D4B8F0;margin:0 0 26px;}
+.vm-visi{background:rgba(255,255,255,0.13);border:1px solid rgba(255,255,255,0.22);border-radius:16px;padding:26px 30px;margin-bottom:16px;position:relative;overflow:hidden;transition:transform .2s ease,box-shadow .2s ease;cursor:default;}
+.vm-visi:hover{transform:translateY(-3px);box-shadow:0 12px 32px rgba(0,0,0,0.35);}
+.vm-visi::before{content:'\201C';font-size:130px;color:rgba(255,255,255,0.06);position:absolute;top:-18px;right:16px;line-height:1;font-family:Georgia,serif;pointer-events:none;}
+.vm-visi-tag{font-size:10px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:#C9A8F0;margin-bottom:10px;display:flex;align-items:center;gap:10px;}
+.vm-visi-tag::after{content:'';flex:1;height:1px;background:rgba(255,255,255,0.15);}
+.vm-visi-txt{font-family:'Lora',Georgia,serif;font-size:15px;font-weight:500;color:#fff;line-height:1.65;margin:0 0 18px;position:relative;z-index:1;}
+.vm-kw-row{display:flex;flex-wrap:wrap;gap:7px;position:relative;z-index:1;}
+.vm-kw{background:rgba(255,255,255,0.12);color:#E8D8FF;font-size:12px;font-weight:500;padding:4px 12px;border-radius:99px;border:1px solid rgba(255,255,255,0.20);transition:background .15s;}
+.vm-kw:hover{background:rgba(255,255,255,0.22);}
+.vm-misi-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;}
+.vm-misi-card{background:rgba(255,255,255,0.92);border:1px solid rgba(255,255,255,0.80);border-radius:14px;padding:20px 16px;cursor:pointer;transition:transform .2s ease,box-shadow .25s ease,background .2s ease;position:relative;}
+.vm-misi-card:hover{transform:translateY(-5px) scale(1.02);box-shadow:0 16px 40px rgba(61,17,101,0.30),0 4px 12px rgba(0,0,0,0.12);background:#fff;z-index:2;}
+.vm-misi-card:active{transform:translateY(-2px) scale(1.01);box-shadow:0 8px 20px rgba(61,17,101,0.22);}
+.vm-misi-card::after{content:attr(data-tip);position:absolute;bottom:calc(100% + 8px);left:50%;transform:translateX(-50%);background:rgba(38,33,92,0.92);color:#EDE0FF;font-size:11px;padding:5px 12px;border-radius:8px;white-space:nowrap;opacity:0;pointer-events:none;transition:opacity .2s;z-index:10;}
+.vm-misi-card:hover::after{opacity:1;}
+.vm-misi-num{width:28px;height:28px;background:#534AB7;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;color:#fff;margin-bottom:10px;transition:background .2s;}
+.vm-misi-card:hover .vm-misi-num{background:#3C3489;}
+.vm-misi-tag-lbl{font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:#6B4A8A;margin-bottom:7px;transition:color .2s;}
+.vm-misi-card:hover .vm-misi-tag-lbl{color:#3C3489;}
+.vm-misi-txt{font-size:13px;color:#2D1A4A;line-height:1.65;}
+.vm-misi-kw-row{display:flex;flex-wrap:wrap;gap:6px;margin-top:10px;}
+.vm-misi-kw{background:#EEEDFE;color:#534AB7;font-size:11px;font-weight:500;padding:3px 10px;border-radius:99px;border:1px solid #CECBF6;transition:background .15s,color .15s;}
+.vm-misi-card:hover .vm-misi-kw{background:#CECBF6;color:#26215C;}
+
+/* ===== WHITE BASE ===== */
+.white-base{background:#fff;border-radius:0 0 20px 20px;padding:32px 48px 56px;}
+.divider-line{width:40px;height:3px;background:#D4C6F0;border-radius:99px;margin:0 auto 32px;}
+
+/* ===== SHARED ===== */
+.ey-purple{display:inline-flex;align-items:center;gap:7px;background:#EEEDFE;color:#534AB7;font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;padding:5px 12px;border-radius:99px;margin-bottom:14px;border:1px solid #CECBF6;}
+.ey-green{display:inline-flex;align-items:center;gap:7px;background:#EAF3DE;color:#3B6D11;font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;padding:5px 12px;border-radius:99px;margin-bottom:14px;border:1px solid #C0DD97;}
+.ey-teal{display:inline-flex;align-items:center;gap:7px;background:#E1F5EE;color:#0F6E56;font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;padding:5px 12px;border-radius:99px;margin-bottom:14px;border:1px solid #9FE1CB;}
+.sec-title{font-family:'Lora',Georgia,serif;font-size:20px;font-weight:600;color:#1a1a1a;margin-bottom:4px;}
+.sec-sub{font-size:13px;color:#666;margin-bottom:22px;}
+.sec-divider{border:none;border-top:1px solid #E8E8E3;margin:40px 0;}
+.metrics-3{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:20px;}
+.metrics-4{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:20px;}
+.metric{background:#f8f8f6;border-radius:12px;padding:14px 16px;}
+.metric-lbl{font-size:11px;color:#666;margin-bottom:5px;}
+.metric-val{font-family:'Lora',Georgia,serif;font-size:22px;font-weight:600;color:#1a1a1a;margin-bottom:3px;}
+.badge{display:inline-block;font-size:11px;font-weight:600;padding:2px 8px;border-radius:99px;}
+.bg-g{background:#EAF3DE;color:#3B6D11;}
+.bg-p{background:#EEEDFE;color:#534AB7;}
+.bg-t{background:#E1F5EE;color:#0F6E56;}
+.bg-o{background:#FAEEDA;color:#854F0B;}
+
+/* ===== TABS & PILLS ===== */
+.tabs{display:flex;gap:0;margin-bottom:16px;border:0.5px solid #ddd;border-radius:10px;overflow:hidden;width:fit-content;}
+.tab{padding:7px 16px;font-size:12px;font-weight:500;cursor:pointer;color:#666;background:#fff;border:none;border-right:0.5px solid #ddd;transition:all .15s;font-family:inherit;}
+.tab:last-child{border-right:none;}
+.tab.ap{background:#EEEDFE;color:#534AB7;}
+.tab.ag{background:#EAF3DE;color:#3B6D11;}
+.tab.at{background:#E1F5EE;color:#0F6E56;}
+.pills{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:14px;align-items:center;}
+.filter-lbl{font-size:12px;color:#666;}
+.pill{border:1px solid #ddd;background:#fff;border-radius:99px;padding:4px 12px;font-size:12px;cursor:pointer;color:#666;transition:all .15s;font-family:inherit;}
+.pill.active{background:#534AB7;color:#EEEDFE;border-color:#534AB7;}
+.hint{font-size:11px;color:#aaa;margin-bottom:8px;}
+
+/* ===== CHARTS ===== */
+.chart-box{position:relative;width:100%;height:300px;}
+.chart-lg{position:relative;width:100%;height:340px;}
+.legend{display:flex;flex-wrap:wrap;gap:14px;font-size:12px;color:#666;margin-bottom:10px;}
+.legend-dot{display:inline-block;width:10px;height:10px;border-radius:2px;margin-right:4px;vertical-align:middle;}
+
+/* ===== DETAIL PANELS ===== */
+.dp{display:none;border-radius:14px;border:1px solid #e8e8e3;background:#fff;padding:20px 22px;margin-top:16px;}
+.dp-hd{display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:14px;gap:12px;}
+.dp-title{font-size:15px;font-weight:600;color:#1a1a1a;margin-bottom:3px;font-family:'Lora',Georgia,serif;}
+.dp-sub{font-size:12px;color:#666;}
+.close-btn{background:none;border:1px solid #ddd;border-radius:8px;padding:4px 10px;font-size:12px;cursor:pointer;color:#666;font-family:inherit;}
+.delta-row{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:14px;}
+.delta-card{background:#f8f8f6;border-radius:10px;padding:12px 14px;}
+.delta-yr{font-size:11px;color:#666;margin-bottom:4px;}
+.delta-val{font-family:'Lora',Georgia,serif;font-size:20px;font-weight:600;color:#1a1a1a;margin-bottom:2px;}
+.dc{font-size:11px;font-weight:600;}
+.pc{color:#3B6D11;}.nc{color:#A32D2D;}.uc{color:#534AB7;}
+.spark{position:relative;width:100%;height:88px;}
+.stat2{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin-bottom:14px;}
+.stat3{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:14px;}
+.stat-box{background:#f8f8f6;border-radius:10px;padding:12px 14px;}
+.stat-lbl{font-size:11px;color:#666;margin-bottom:4px;}
+.stat-val{font-family:'Lora',Georgia,serif;font-size:18px;font-weight:600;color:#1a1a1a;}
+.bar-row{display:flex;align-items:center;gap:10px;margin-bottom:8px;}
+.bar-lbl{font-size:12px;color:#666;width:90px;flex-shrink:0;text-align:right;}
+.bar-track{flex:1;height:8px;background:#f0f0ee;border-radius:99px;overflow:hidden;}
+.bar-fill{height:100%;border-radius:99px;}
+.bar-pct{font-size:12px;font-weight:500;color:#1a1a1a;width:44px;flex-shrink:0;}
+
+/* ===== CMP DELTA ===== */
+.cmp-delta{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-top:14px;}
+
+/* ===== IPA ===== */
+.ipa-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;margin-bottom:16px;}
+.ipa-card{border-radius:12px;padding:14px;border:0.5px solid #ddd;}
+.ipa-q{font-size:10px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;margin-bottom:6px;}
+.ipa-title{font-size:13px;font-weight:500;color:#1a1a1a;margin-bottom:4px;}
+.ipa-desc{font-size:12px;color:#666;line-height:1.5;}
+.tindak{background:#f8f8f6;border-radius:10px;padding:14px 16px;}
+.tindak p:first-child{font-size:12px;font-weight:600;color:#1a1a1a;margin-bottom:6px;}
+.tindak p:last-child{font-size:12px;color:#666;line-height:1.7;}
+
+/* ===== NOTE ===== */
+.note{font-size:11px;color:#aaa;margin-top:14px;}
+
+/* ===== RESPONSIVE ===== */
+@media(max-width:640px){
+  .hero,.grad,.white-base{padding-left:20px;padding-right:20px;}
+  .hero-title{font-size:24px;}
+  .hero-stats,.vm-misi-grid,.metrics-3,.metrics-4,.delta-row,.stat2,.stat3,.ipa-grid,.cmp-delta{grid-template-columns:1fr;}
+  .metrics-4{grid-template-columns:repeat(2,1fr);}
+}
+</style>
+</head>
+<body>
+<div class="plb-page">
+
+<!-- ===== HERO ===== -->
+<div class="hero">
+  <div class="hero-ey">Program Studi</div>
+  <h1 class="hero-title">S1 Pendidikan Luar Biasa<br>Universitas Negeri Surabaya</h1>
+  <p class="hero-desc">Mewujudkan keilmuan pendidikan khusus yang inklusif, adaptif, inovatif, dan berjiwa kewirausahaan bagi masa depan pendidikan Indonesia.</p>
+  <div class="hero-pills">
+    <span class="hero-pill">Inklusif</span><span class="hero-pill">Teknologi</span>
+    <span class="hero-pill">Adaptif</span><span class="hero-pill">Inovatif</span>
+    <span class="hero-pill">Edupreneurship</span>
+  </div>
+  <div class="hero-stats">
+    <div class="hero-stat"><div class="hero-stat-num">451</div><div class="hero-stat-lbl">Mahasiswa Aktif</div></div>
+    <div class="hero-stat"><div class="hero-stat-num">94,60%</div><div class="hero-stat-lbl">Kepuasan Mahasiswa</div></div>
+    <div class="hero-stat"><div class="hero-stat-num">91,33%</div><div class="hero-stat-lbl">Kepuasan Pengguna Lulusan</div></div>
+  </div>
+</div>
+
+<!-- ===== GRADASI + VISI MISI ===== -->
+<div class="grad">
+  <div class="vm-ey">Visi &amp; Misi</div>
+  <h2 class="vm-title">Visi &amp; Misi Program Studi</h2>
+  <p class="vm-sub">Pendidikan Luar Biasa &mdash; Fakultas Ilmu Pendidikan, Universitas Negeri Surabaya</p>
+  <div class="vm-visi">
+    <div class="vm-visi-tag">Visi 2035</div>
+    <p class="vm-visi-txt">Mewujudkan keilmuan pendidikan khusus yang Inklusif berbasis teknologi, adaptif, inovatif, dan berjiwa kewirausahaan pada tahun 2035.</p>
+    <div class="vm-kw-row">
+      <span class="vm-kw">Inklusif</span><span class="vm-kw">Teknologi</span><span class="vm-kw">Adaptif</span>
+      <span class="vm-kw">Inovatif</span><span class="vm-kw">Edupreneurship</span><span class="vm-kw">Kolaborasi Global</span>
+    </div>
+  </div>
+  <div class="vm-misi-grid">
+    <div class="vm-misi-card" data-tip="Misi Pendidikan">
+      <div class="vm-misi-num">1</div>
+      <div class="vm-misi-tag-lbl">Misi Pendidikan</div>
+      <p class="vm-misi-txt">Menyelenggarakan pendidikan khusus yang <strong>Inklusif</strong>, <strong>berkarakter tangguh</strong>, <strong>adaptif</strong>, dan <strong>inovatif</strong> berbasis <strong>teknologi</strong> dan <em><strong>edupreneurship</strong></em>.</p>
+      <div class="vm-misi-kw-row">
+        <span class="vm-misi-kw">Inklusif</span><span class="vm-misi-kw">Berkarakter Tangguh</span>
+        <span class="vm-misi-kw">Adaptif</span><span class="vm-misi-kw">Inovatif</span>
+        <span class="vm-misi-kw">Teknologi</span><span class="vm-misi-kw">Kewirausahaan Pendidikan</span>
+      </div>
+    </div>
+    <div class="vm-misi-card" data-tip="Misi Penelitian">
+      <div class="vm-misi-num">2</div>
+      <div class="vm-misi-tag-lbl">Misi Penelitian</div>
+      <p class="vm-misi-txt">Menyelenggarakan penelitian di bidang ilmu pendidikan khusus yang <strong>Inklusif</strong>, melalui <strong>kolaborasi global</strong>.</p>
+      <div class="vm-misi-kw-row">
+        <span class="vm-misi-kw">Inklusif</span><span class="vm-misi-kw">Kolaborasi Global</span>
+      </div>
+    </div>
+    <div class="vm-misi-card" data-tip="Misi Pengabdian">
+      <div class="vm-misi-num">3</div>
+      <div class="vm-misi-tag-lbl">Misi Pengabdian</div>
+      <p class="vm-misi-txt">Menyelenggarakan pengabdian kepada masyarakat di bidang ilmu pendidikan khusus yang <strong>Inklusif</strong>, melalui <strong>kolaborasi global</strong>.</p>
+      <div class="vm-misi-kw-row">
+        <span class="vm-misi-kw">Inklusif</span><span class="vm-misi-kw">Kolaborasi Global</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ===== WHITE BASE ===== -->
+<div class="white-base">
+  <div class="divider-line"></div>
+
+  <!-- SURVEI VMTS -->
+  <div class="ey-purple">Survei VMTS</div>
+  <h2 class="sec-title">Tren pemahaman Visi Misi Tujuan &amp; Sasaran</h2>
+  <p class="sec-sub">8 indikator &middot; 2023&ndash;2025 &middot; Klik bar untuk detail indikator</p>
+  <div class="metrics-3">
+    <div class="metric"><p class="metric-lbl">Rata-rata 2023</p><p class="metric-val">86,4%</p><span class="badge bg-g">Baseline</span></div>
+    <div class="metric"><p class="metric-lbl">Rata-rata 2024</p><p class="metric-val">97,0%</p><span class="badge bg-g">+10,6 poin</span></div>
+    <div class="metric"><p class="metric-lbl">Rata-rata 2025</p><p class="metric-val">96,9%</p><span class="badge bg-p">Stabil tinggi</span></div>
+  </div>
+  <div class="tabs">
+    <button class="tab ap" id="svtab-bar" onclick="svTab('bar')">Bar chart</button>
+    <button class="tab" id="svtab-line" onclick="svTab('line')">Line tren</button>
+    <button class="tab" id="svtab-cmp" onclick="svTab('cmp')">Bandingkan</button>
+  </div>
+  <div id="svv-bar">
+    <div class="pills">
+      <span class="filter-lbl">Filter:</span>
+      <button class="pill active" data-sv="all" onclick="svMode('all')">Semua</button>
+      <button class="pill" data-sv="2023" onclick="svMode('2023')">2023</button>
+      <button class="pill" data-sv="2024" onclick="svMode('2024')">2024</button>
+      <button class="pill" data-sv="2025" onclick="svMode('2025')">2025</button>
+    </div>
+    <div class="legend" id="svLeg"></div>
+    <p class="hint">&#128432; Klik bar untuk detail indikator</p>
+    <div class="chart-box"><canvas id="svBarC"></canvas></div>
+  </div>
+  <div id="svv-line" style="display:none;"><div class="chart-box" style="height:320px;"><canvas id="svLineC"></canvas></div></div>
+  <div id="svv-cmp" style="display:none;">
+    <div class="pills">
+      <span class="filter-lbl">Tahun A:</span>
+      <button class="pill active" data-ga="2023" onclick="svCmpSet('a','2023')">2023</button>
+      <button class="pill" data-ga="2024" onclick="svCmpSet('a','2024')">2024</button>
+      <button class="pill" data-ga="2025" onclick="svCmpSet('a','2025')">2025</button>
+      <span class="filter-lbl" style="margin-left:10px;">Tahun B:</span>
+      <button class="pill" data-gb="2023" onclick="svCmpSet('b','2023')">2023</button>
+      <button class="pill" data-gb="2024" onclick="svCmpSet('b','2024')">2024</button>
+      <button class="pill active" data-gb="2025" onclick="svCmpSet('b','2025')">2025</button>
+    </div>
+    <div class="chart-box"><canvas id="svCmpC"></canvas></div>
+    <div class="cmp-delta" id="svCmpDelta"></div>
+  </div>
+  <div class="dp" id="svDp"></div>
+  <p class="note">Sumber: Laporan Hasil Survei VMTS S1 Pendidikan Luar Biasa UNESA 2023, 2024, 2025. Koordinator: Dr. Pamuji M.Kes (2023&ndash;2024), Khofidotur Rofiah Ph.D. (2025).</p>
+
+  <hr class="sec-divider">
+
+  <!-- KEPUASAN PENGGUNA -->
+  <div class="ey-green">Kepuasan Pengguna Lulusan</div>
+  <h2 class="sec-title">Survei kepuasan pengguna lulusan S1 Pendidikan Luar Biasa UNESA</h2>
+  <p class="sec-sub">229 responden lembaga pengguna &middot; Angkatan 2021&ndash;2023 &middot; 9 aspek kompetensi</p>
+  <div class="metrics-4">
+    <div class="metric"><p class="metric-lbl">Rata-rata Sangat Baik</p><p class="metric-val">91,33%</p><span class="badge bg-g">Sangat tinggi</span></div>
+    <div class="metric"><p class="metric-lbl">Rata-rata Baik</p><p class="metric-val">8,49%</p><span class="badge bg-p">Pendukung</span></div>
+    <div class="metric"><p class="metric-lbl">Aspek tertinggi</p><p class="metric-val">100%</p><span class="badge bg-t">Kreativitas</span></div>
+    <div class="metric"><p class="metric-lbl">Aspek terendah</p><p class="metric-val">84,28%</p><span class="badge bg-o">Teknologi</span></div>
+  </div>
+  <div class="tabs">
+    <button class="tab ag" id="kptab-bar" onclick="kpTab('bar')">Per aspek</button>
+    <button class="tab" id="kptab-ang" onclick="kpTab('ang')">Per angkatan</button>
+    <button class="tab" id="kptab-radar" onclick="kpTab('radar')">Radar</button>
+  </div>
+  <div id="kpv-bar"><p class="hint">&#128432; Klik bar untuk detail aspek</p><div class="chart-box"><canvas id="kpBarC"></canvas></div></div>
+  <div id="kpv-ang" style="display:none;"><div class="chart-box"><canvas id="kpAngC"></canvas></div></div>
+  <div id="kpv-radar" style="display:none;"><div class="chart-lg"><canvas id="kpRadarC"></canvas></div></div>
+  <div class="dp" id="kpDp"></div>
+  <p class="note">Sumber: Laporan Survei Kepuasan Pengguna Lulusan S1 Pendidikan Luar Biasa UNESA 2021&ndash;2023. Tidak ada penilaian kategori Cukup maupun Kurang.</p>
+
+  <hr class="sec-divider">
+
+  <!-- KEPUASAN MAHASISWA -->
+  <div class="ey-teal">Kepuasan Mahasiswa</div>
+  <h2 class="sec-title">Survei kepuasan mahasiswa S1 Pendidikan Luar Biasa UNESA</h2>
+  <p class="sec-sub">451 mahasiswa aktif &middot; 5 dimensi layanan ServQual &middot; Metode IPA</p>
+  <div class="metrics-3">
+    <div class="metric"><p class="metric-lbl">Tingkat kepuasan keseluruhan</p><p class="metric-val">94,60%</p><span class="badge bg-t">Sangat Baik</span></div>
+    <div class="metric"><p class="metric-lbl">Total responden</p><p class="metric-val">451</p><span class="badge bg-p">Mahasiswa aktif</span></div>
+    <div class="metric"><p class="metric-lbl">Metode analisis</p><p class="metric-val" style="font-size:18px;">IPA</p><span class="badge bg-o">Importance&ndash;Performance</span></div>
+  </div>
+  <div class="tabs">
+    <button class="tab at" id="kmtab-bar" onclick="kmTab('bar')">5 Dimensi</button>
+    <button class="tab" id="kmtab-radar" onclick="kmTab('radar')">Radar</button>
+    <button class="tab" id="kmtab-ipa" onclick="kmTab('ipa')">Metode IPA</button>
+  </div>
+  <div id="kmv-bar"><p class="hint">&#128432; Klik bar untuk detail dimensi</p><div class="chart-box"><canvas id="kmBarC"></canvas></div></div>
+  <div id="kmv-radar" style="display:none;"><div class="chart-lg"><canvas id="kmRadarC"></canvas></div></div>
+  <div id="kmv-ipa" style="display:none;">
+    <div class="ipa-grid">
+      <div class="ipa-card" style="background:#EAF3DE;border-color:#C0DD97;"><p class="ipa-q" style="color:#3B6D11;">Kuadran I &mdash; Pertahankan</p><p class="ipa-title">Kepentingan Tinggi &middot; Kinerja Tinggi</p><p class="ipa-desc">Assurance, Empathy, Tangible &mdash; dimensi penting yang sudah terlaksana baik. Pertahankan secara konsisten.</p></div>
+      <div class="ipa-card" style="background:#FAECE7;border-color:#F5C4B3;"><p class="ipa-q" style="color:#712B13;">Kuadran II &mdash; Prioritas utama</p><p class="ipa-title">Kepentingan Tinggi &middot; Kinerja Rendah</p><p class="ipa-desc">Dimensi diprioritaskan mahasiswa namun belum optimal &mdash; fokus utama perbaikan prodi.</p></div>
+      <div class="ipa-card" style="background:#EEEDFE;border-color:#CECBF6;"><p class="ipa-q" style="color:#3C3489;">Kuadran III &mdash; Prioritas rendah</p><p class="ipa-title">Kepentingan Rendah &middot; Kinerja Rendah</p><p class="ipa-desc">Reliability, Responsiveness &mdash; dipantau berkala tanpa alokasi sumber daya besar.</p></div>
+      <div class="ipa-card" style="background:#E1F5EE;border-color:#9FE1CB;"><p class="ipa-q" style="color:#085041;">Kuadran IV &mdash; Berlebihan</p><p class="ipa-title">Kepentingan Rendah &middot; Kinerja Tinggi</p><p class="ipa-desc">Kinerja melebihi ekspektasi. Sumber daya dapat dialihkan ke dimensi prioritas lebih tinggi.</p></div>
+    </div>
+    <div class="tindak"><p>Tindak lanjut berbasis hasil IPA</p><p>Penguatan etika profesi &middot; Integrasi teknologi di seluruh mata kuliah &middot; Penerapan PjBL &amp; PBL &middot; Peningkatan literasi bahasa asing &middot; Seminar &amp; publikasi ilmiah mahasiswa</p></div>
+  </div>
+  <div class="dp" id="kmDp"></div>
+  <p class="note">Sumber: Survei Kepuasan Mahasiswa S1 Pendidikan Luar Biasa UNESA, dilaksanakan setiap akhir semester. Instrumen valid berbasis dimensi ServQual. Dipublikasikan secara transparan sebagai dasar pengambilan keputusan strategis.</p>
+
+</div><!-- end white-base -->
+</div><!-- end plb-page -->
+
+<script>
+// ===== DATA VMTS =====
+var SL=['Visi Prodi','Misi & RIP','Kata Kunci Visi','Misi Pendidikan','Misi Penelitian','Misi Pengabdian','Tujuan Prodi','Program S1'];
+var SD=['Pemahaman Visi Prodi PLB UNESA 2035','Pemahaman substansi Misi & RIP','Pemahaman kata kunci Visi','Pemahaman Misi Pendidikan inklusif','Pemahaman Misi Penelitian global','Pemahaman Misi Pengabdian','Pemahaman Tujuan Prodi','Pemahaman Program S1 Pendidikan Luar Biasa'];
+var D23=[85.1,89.7,79.3,92,89.5,89.4,81.6,88.5];
+var D24=[98,96,96,94,96,98,98,100];
+var D25=[95,93,99,100,96,93,99,100];
+var SBYR={2023:D23,2024:D24,2025:D25};
+var SC={2023:{bg:'#B4B2A9',bd:'#888780'},2024:{bg:'#534AB7',bd:'#3C3489'},2025:{bg:'#1D9E75',bd:'#0F6E56'}};
+var SLC=['#534AB7','#1D9E75','#D85A30','#378ADD','#BA7517','#993556','#3B6D11','#B4B2A9'];
+var svB=null,svL=null,svC=null,svSp=null,curM='all',cmpA='2023',cmpB='2025';
+
+function svDS(m){if(m==='all')return[{label:'2023',data:D23,backgroundColor:SC[2023].bg,borderColor:SC[2023].bd,borderWidth:1,borderRadius:4},{label:'2024',data:D24,backgroundColor:SC[2024].bg,borderColor:SC[2024].bd,borderWidth:1,borderRadius:4},{label:'2025',data:D25,backgroundColor:SC[2025].bg,borderColor:SC[2025].bd,borderWidth:1,borderRadius:4}];return[{label:m,data:SBYR[m],backgroundColor:SC[m].bg,borderColor:SC[m].bd,borderWidth:1,borderRadius:4}];}
+function svLeg(m){var el=document.getElementById('svLeg'),defs=[{y:'2023',c:'#B4B2A9',a:'86,4%'},{y:'2024',c:'#534AB7',a:'97,0%'},{y:'2025',c:'#1D9E75',a:'96,9%'}],shown=m==='all'?defs:defs.filter(function(d){return d.y===m;});el.innerHTML=shown.map(function(d){return'<span><span class="legend-dot" style="background:'+d.c+'"></span>'+d.y+' ('+d.a+')</span>';}).join('');}
+function svMode(m){curM=m;document.querySelectorAll('[data-sv]').forEach(function(p){p.classList.toggle('active',p.dataset.sv===m);});svB.data.datasets=svDS(m);svB.update();svLeg(m);}
+function svTab(t){['bar','line','cmp'].forEach(function(x){document.getElementById('svv-'+x).style.display=x===t?'block':'none';document.getElementById('svtab-'+x).className='tab'+(x===t?' ap':'');});}
+function svShowD(i){var panel=document.getElementById('svDp'),v23=D23[i],v24=D24[i],v25=D25[i],d24=(v24-v23).toFixed(1),d25=(v25-v24).toFixed(1);function arr(v){return v>0?'&#9650; +'+v+'%':v<0?'&#9660; '+v+'%':'&#9646; 0%';}function cls(v){return v>0?'pc':v<0?'nc':'uc';}panel.style.display='block';panel.innerHTML='<div class="dp-hd"><div><p class="dp-title">'+SL[i]+'</p><p class="dp-sub">'+SD[i]+'</p></div><button class="close-btn" onclick="document.getElementById(\'svDp\').style.display=\'none\';if(svSp){svSp.destroy();svSp=null;}">Tutup</button></div><div class="delta-row"><div class="delta-card"><p class="delta-yr">2023</p><p class="delta-val">'+v23.toFixed(1)+'%</p><span class="dc uc">Baseline</span></div><div class="delta-card"><p class="delta-yr">2024</p><p class="delta-val">'+v24.toFixed(1)+'%</p><span class="dc '+cls(parseFloat(d24))+'">'+arr(parseFloat(d24))+'</span></div><div class="delta-card"><p class="delta-yr">2025</p><p class="delta-val">'+v25.toFixed(1)+'%</p><span class="dc '+cls(parseFloat(d25))+'">'+arr(parseFloat(d25))+'</span></div></div><p style="font-size:12px;color:#666;margin-bottom:8px;">Tren 3 tahun</p><div class="spark"><canvas id="svSpC"></canvas></div>';if(svSp)svSp.destroy();svSp=new Chart(document.getElementById('svSpC'),{type:'line',data:{labels:['2023','2024','2025'],datasets:[{data:[v23,v24,v25],borderColor:'#534AB7',backgroundColor:'rgba(83,74,183,0.08)',pointBackgroundColor:'#534AB7',pointRadius:5,borderWidth:2.5,fill:true,tension:0.35}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false},tooltip:{callbacks:{label:function(c){return' '+c.parsed.y.toFixed(1)+'%';}}}},scales:{x:{ticks:{font:{size:12},color:'#888780'},grid:{display:false}},y:{min:Math.max(60,Math.min(v23,v24,v25)-8),max:Math.min(105,Math.max(v23,v24,v25)+5),ticks:{callback:function(v){return v+'%';},font:{size:11},color:'#888780'},grid:{color:'rgba(136,135,128,0.12)'}}}}});}
+function svCmpSet(g,yr){if(g==='a')cmpA=yr;else cmpB=yr;document.querySelectorAll('[data-g'+g+']').forEach(function(b){b.classList.toggle('active',b.dataset['g'+g]===yr);});svCmpRebuild();}
+function svCmpRebuild(){var dA=SBYR[cmpA],dB=SBYR[cmpB];if(svC)svC.destroy();svC=new Chart(document.getElementById('svCmpC'),{type:'bar',data:{labels:SL,datasets:[{label:cmpA,data:dA,backgroundColor:SC[cmpA].bg,borderColor:SC[cmpA].bd,borderWidth:1,borderRadius:4},{label:cmpB,data:dB,backgroundColor:SC[cmpB].bg,borderColor:SC[cmpB].bd,borderWidth:1,borderRadius:4}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false},tooltip:{callbacks:{label:function(c){return' '+c.dataset.label+': '+c.parsed.y.toFixed(1)+'%';}}}},scales:{x:{ticks:{font:{size:10},maxRotation:35,color:'#888780'},grid:{display:false}},y:{min:70,max:105,ticks:{callback:function(v){return v+'%';},font:{size:11},color:'#888780'},grid:{color:'rgba(136,135,128,0.12)'}}}}});var row=document.getElementById('svCmpDelta');row.innerHTML=SL.map(function(_,i){var diff=(dB[i]-dA[i]).toFixed(1),pf=parseFloat(diff),cl=pf>0?'pc':pf<0?'nc':'uc',ar=pf>0?'&#9650;':pf<0?'&#9660;':'&#9646;';return'<div class="delta-card"><p class="delta-yr" style="font-size:10px;">'+SL[i]+'</p><p class="delta-val" style="font-size:14px;">'+ar+' '+Math.abs(pf)+'%</p><span class="dc '+cl+'" style="font-size:10px;">'+cmpA+'&rarr;'+cmpB+'</span></div>';}).join('');}
+
+svB=new Chart(document.getElementById('svBarC'),{type:'bar',data:{labels:SL,datasets:svDS('all')},options:{responsive:true,maintainAspectRatio:false,animation:{duration:700,easing:'easeOutQuart'},plugins:{legend:{display:false},tooltip:{callbacks:{label:function(c){return' '+c.dataset.label+': '+c.parsed.y.toFixed(1)+'%';}}}},scales:{x:{ticks:{font:{size:10},maxRotation:35,autoSkip:false,color:'#888780'},grid:{display:false}},y:{min:70,max:105,ticks:{callback:function(v){return v+'%';},font:{size:11},color:'#888780'},grid:{color:'rgba(136,135,128,0.12)'}}},onClick:function(_,els){if(els.length)svShowD(els[0].index);}}});
+svL=new Chart(document.getElementById('svLineC'),{type:'line',data:{labels:['2023','2024','2025'],datasets:SL.map(function(lb,i){return{label:lb,data:[D23[i],D24[i],D25[i]],borderColor:SLC[i],backgroundColor:'transparent',pointRadius:5,borderWidth:2,tension:0.35};})},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:true,position:'bottom',labels:{font:{size:11},boxWidth:10,padding:10}},tooltip:{mode:'index',intersect:false}},scales:{x:{ticks:{font:{size:12},color:'#888780'},grid:{display:false}},y:{min:70,max:105,ticks:{callback:function(v){return v+'%';},font:{size:11},color:'#888780'},grid:{color:'rgba(136,135,128,0.12)'}}}}});
+svLeg('all');svCmpRebuild();
+
+// ===== DATA KEPUASAN PENGGUNA =====
+var KA=['Integritas/Etika','Keahlian Bidang Ilmu','Kemampuan Bhs Inggris','Penggunaan Teknologi','Kemampuan Komunikasi','Kerjasama Tim','Pengembangan Diri','Berpikir Kritis','Kreativitas'];
+var KD=['Etika, moral, dan integritas profesional','Penguasaan keilmuan Pendidikan Luar Biasa','Kemampuan komunikasi bahasa Inggris','Penggunaan dan pemanfaatan teknologi informasi','Kemampuan berkomunikasi efektif','Kemampuan bekerja sama dalam tim','Inisiatif pengembangan diri berkelanjutan','Kemampuan analisis dan berpikir kritis','Kreativitas dalam inovasi pembelajaran'];
+var KSB=[92.45,93.71,89.31,84.28,90.57,93.71,89.94,88.05,100];
+var KCNT=[147,149,142,134,144,149,143,140,159];
+var KCOL=['#534AB7','#1D9E75','#D85A30','#378ADD','#BA7517','#993556','#3B6D11','#639922','#0F6E56'];
+var kpB=null,kpA=null,kpR=null;
+
+function kpTab(t){['bar','ang','radar'].forEach(function(x){document.getElementById('kpv-'+x).style.display=x===t?'block':'none';document.getElementById('kptab-'+x).className='tab'+(x===t?' ag':'');});}
+function kpShowD(i){var panel=document.getElementById('kpDp'),sb=KSB[i],b=(100-sb).toFixed(2);panel.style.display='block';panel.innerHTML='<div class="dp-hd"><div><p class="dp-title">'+KA[i]+'</p><p class="dp-sub">'+KD[i]+'</p></div><button class="close-btn" onclick="document.getElementById(\'kpDp\').style.display=\'none\'">Tutup</button></div><div class="stat3"><div class="stat-box"><p class="stat-lbl">Sangat Baik</p><p class="stat-val">'+sb.toFixed(2)+'%</p></div><div class="stat-box"><p class="stat-lbl">Baik</p><p class="stat-val">'+b+'%</p></div><div class="stat-box"><p class="stat-lbl">Responden SB</p><p class="stat-val">'+KCNT[i]+'/159</p></div></div><div class="bar-row"><span class="bar-lbl">Sangat Baik</span><div class="bar-track"><div class="bar-fill" style="width:'+sb.toFixed(1)+'%;background:#639922;"></div></div><span class="bar-pct">'+sb.toFixed(1)+'%</span></div><div class="bar-row"><span class="bar-lbl">Baik</span><div class="bar-track"><div class="bar-fill" style="width:'+b+'%;background:#B4B2A9;"></div></div><span class="bar-pct">'+b+'%</span></div><div class="bar-row"><span class="bar-lbl">Cukup</span><div class="bar-track"><div class="bar-fill" style="width:0%;background:#EF9F27;"></div></div><span class="bar-pct">0%</span></div><p style="font-size:11px;color:#aaa;margin-top:10px;">Selisih dari standar minimal 75%: +'+(sb-75).toFixed(2)+' poin</p>';}
+
+kpB=new Chart(document.getElementById('kpBarC'),{type:'bar',data:{labels:KA,datasets:[{label:'Sangat Baik',data:KSB,backgroundColor:'#639922',borderColor:'#3B6D11',borderWidth:1,borderRadius:4},{label:'Baik',data:KSB.map(function(v){return 100-v;}),backgroundColor:'#D3D1C7',borderColor:'#B4B2A9',borderWidth:1,borderRadius:4}]},options:{responsive:true,maintainAspectRatio:false,animation:{duration:700},plugins:{legend:{display:false},tooltip:{callbacks:{label:function(c){return' '+c.dataset.label+': '+c.parsed.y.toFixed(2)+'%';}}}},scales:{x:{stacked:true,ticks:{font:{size:10},maxRotation:35,autoSkip:false,color:'#888780'},grid:{display:false}},y:{stacked:true,min:0,max:100,ticks:{callback:function(v){return v+'%';},font:{size:11},color:'#888780'},grid:{color:'rgba(136,135,128,0.12)'}}},onClick:function(_,els){if(els.length)kpShowD(els[0].index);}}});
+kpA=new Chart(document.getElementById('kpAngC'),{type:'bar',data:{labels:['Angkatan 2021 (52 resp.)','Angkatan 2022 (58 resp.)','Angkatan 2023 (49 resp.)'],datasets:[{data:[92.52,92.15,89.12],backgroundColor:['#534AB7','#1D9E75','#D85A30'],borderColor:['#3C3489','#0F6E56','#993C1D'],borderWidth:1,borderRadius:6}]},options:{responsive:true,maintainAspectRatio:false,animation:{duration:700},plugins:{legend:{display:false},tooltip:{callbacks:{label:function(c){return' '+c.parsed.y.toFixed(2)+'% Sangat Baik';}}}},scales:{x:{ticks:{font:{size:12},color:'#888780'},grid:{display:false}},y:{min:85,max:100,ticks:{callback:function(v){return v+'%';},font:{size:11},color:'#888780'},grid:{color:'rgba(136,135,128,0.12)'}}}}});
+kpR=new Chart(document.getElementById('kpRadarC'),{type:'radar',data:{labels:KA,datasets:[{label:'% Sangat Baik',data:KSB,backgroundColor:'rgba(99,153,34,0.12)',borderColor:'#639922',pointBackgroundColor:'#639922',pointRadius:5,borderWidth:2.5},{label:'Standar min. 75%',data:[75,75,75,75,75,75,75,75,75],backgroundColor:'rgba(180,178,169,0.05)',borderColor:'#B4B2A9',borderDash:[5,4],pointRadius:0,borderWidth:1.5}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:true,position:'bottom',labels:{font:{size:11},boxWidth:10,padding:10}}},scales:{r:{min:75,max:100,ticks:{callback:function(v){return v+'%';},font:{size:10},color:'#888780',stepSize:5},grid:{color:'rgba(136,135,128,0.18)'},pointLabels:{font:{size:10},color:'#5F5E5A'}}}}});
+
+// ===== DATA KEPUASAN MAHASISWA =====
+var MD=['Reliability','Responsiveness','Assurance','Empathy','Tangible'];
+var MI=['Keandalan layanan','Ketanggapan layanan','Jaminan mutu','Empati & perhatian','Bukti fisik & fasilitas'];
+var MDA=['Kemampuan prodi memberikan layanan yang dijanjikan secara akurat','Kecepatan dosen dan staf merespons kebutuhan mahasiswa','Kompetensi dosen memberi rasa aman dan kepercayaan','Perhatian individual dosen terhadap kebutuhan mahasiswa','Fasilitas fisik dan sarana prasarana pembelajaran'];
+var MP=[94,93,96,95,95];
+var MC=['#534AB7','#1D9E75','#D85A30','#378ADD','#BA7517'];
+var MB=['#3C3489','#0F6E56','#993C1D','#185FA5','#854F0B'];
+var kmB=null,kmR=null;
+
+function kmTab(t){['bar','radar','ipa'].forEach(function(x){document.getElementById('kmv-'+x).style.display=x===t?'block':'none';document.getElementById('kmtab-'+x).className='tab'+(x===t?' at':'');});}
+function kmShowD(i){var panel=document.getElementById('kmDp'),pct=MP[i],diff=(pct-94.6).toFixed(1);panel.style.display='block';panel.innerHTML='<div class="dp-hd"><div><p class="dp-title">'+MD[i]+' &mdash; '+MI[i]+'</p><p class="dp-sub">'+MDA[i]+'</p></div><button class="close-btn" onclick="document.getElementById(\'kmDp\').style.display=\'none\'">Tutup</button></div><div class="stat2"><div class="stat-box"><p class="stat-lbl">Tingkat kepuasan</p><p class="stat-val">'+pct+'%</p></div><div class="stat-box"><p class="stat-lbl">Selisih rata-rata prodi</p><p class="stat-val" style="color:'+(pct>=94.6?'#3B6D11':'#993C1D')+'">'+(pct>=94.6?'+':'')+diff+' poin</p></div></div><div class="bar-row"><span class="bar-lbl">Dimensi ini</span><div class="bar-track"><div class="bar-fill" style="width:'+pct+'%;background:'+MC[i]+';"></div></div><span class="bar-pct">'+pct+'%</span></div><div class="bar-row"><span class="bar-lbl">Rata-rata</span><div class="bar-track"><div class="bar-fill" style="width:94.6%;background:#B4B2A9;"></div></div><span class="bar-pct">94,60%</span></div>';}
+
+kmB=new Chart(document.getElementById('kmBarC'),{type:'bar',data:{labels:MD.map(function(d,i){return d+' - '+MI[i];}),datasets:[{data:MP,backgroundColor:MC,borderColor:MB,borderWidth:1,borderRadius:6}]},options:{responsive:true,maintainAspectRatio:false,animation:{duration:700,easing:'easeOutQuart'},plugins:{legend:{display:false},tooltip:{callbacks:{label:function(c){return' '+c.parsed.y+'% kepuasan mahasiswa';}}}},scales:{x:{ticks:{font:{size:10},maxRotation:25,color:'#888780'},grid:{display:false}},y:{min:88,max:100,ticks:{callback:function(v){return v+'%';},font:{size:11},color:'#888780',stepSize:2},grid:{color:'rgba(136,135,128,0.12)'}}},onClick:function(_,els){if(els.length)kmShowD(els[0].index);}}});
+kmR=new Chart(document.getElementById('kmRadarC'),{type:'radar',data:{labels:MD.map(function(d,i){return d+' ('+MP[i]+'%)';}),datasets:[{label:'Kepuasan mahasiswa',data:MP,backgroundColor:'rgba(29,158,117,0.12)',borderColor:'#1D9E75',pointBackgroundColor:MC,pointRadius:6,borderWidth:2.5},{label:'Rata-rata (94,60%)',data:[94.6,94.6,94.6,94.6,94.6],backgroundColor:'rgba(136,135,128,0.05)',borderColor:'#B4B2A9',borderDash:[5,4],pointRadius:0,borderWidth:1.5}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:true,position:'bottom',labels:{font:{size:11},boxWidth:10,padding:10}}},scales:{r:{min:88,max:100,ticks:{callback:function(v){return v+'%';},font:{size:10},color:'#888780',stepSize:2},grid:{color:'rgba(136,135,128,0.18)'},pointLabels:{font:{size:11},color:'#5F5E5A'}}}}});
+</script>
+</body>
+</html>
